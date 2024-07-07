@@ -126,6 +126,21 @@ files:
           }
       }
     learner_created: false
-feedback_link: https://hyperskill.org/projects/133/stages/710/implement#comment
-status: Unchecked
+  - name: src/cinema/UserInputManager.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/CalculationManager.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/CinemaLayoutManager.java
+    visible: true
+    learner_created: true
+  - name: src/cinema/OutputManager.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/11106#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Sun, 07 Jul 2024 20:15:20 UTC"
 record: -1
