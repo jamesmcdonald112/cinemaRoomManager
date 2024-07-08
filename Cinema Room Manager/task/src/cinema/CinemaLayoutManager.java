@@ -68,8 +68,5 @@ public class CinemaLayoutManager {
         return row <= firstHalf;
     }
 
-    public static void bookSeat(int row, int seat) {
-        // go to the row and the seat and book the seat for the user. - 1 for indexing
-        seatLayout[row - 1][seat - 1] = 'B';
-    }
+
 }

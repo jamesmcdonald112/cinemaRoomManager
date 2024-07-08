@@ -28,6 +28,11 @@ public class CalculationManager {
         }
     }
 
+    /**
+     * Calculates the cost of the ticket based on the seat location
+     * @param row The row of the seat
+     * @return The price of the ticket as an int.
+     */
     public static int calculateTicketPrice(int row) {
         // Small screen rooms are set at $60
         int totalSeats = CinemaLayoutManager.getTotalSeats();

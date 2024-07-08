@@ -20,26 +20,15 @@ public class Cinema {
         // Create seat layout, set the layout and Print the Cinema layout to the screen
         char[][] seatLayout = CinemaLayoutManager.createSeatLayout(rows, seatsPerRow);
         CinemaLayoutManager.setSeatLayout(seatLayout);
-        OutputManager.printSeatLayout(CinemaLayoutManager.getSeatLayout());
 
         // Calculate total seats and set it.
         int totalSeats = rows * seatsPerRow;
         CinemaLayoutManager.setTotalSeats(totalSeats);
 
-        // Get user to pick a seat to print the price of the ticket for that seat, and then book
-        // the seat
-        System.out.println("Enter a row number:");
-        int rowNumber = Integer.parseInt(UserInputManager.readUserInput());
-        System.out.println("Enter a seat number in that row:");
-        int seatNumber = Integer.parseInt(UserInputManager.readUserInput());
-
-        // Calculate the ticket price
-        int ticketPrice = CalculationManager.calculateTicketPrice(rowNumber);
-        OutputManager.printTicketPrice(ticketPrice);
-
-        // Update the seating arrangement with a booking
-        CinemaLayoutManager.bookSeat(rowNumber, seatNumber);
-        OutputManager.printSeatLayout(seatLayout);
+        // Run menu with a loop
+        while (MenuManager.isRunning()) {
+            MenuManager.menuManager();
+        }
 
     }
 }

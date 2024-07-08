@@ -7,6 +7,10 @@ public class OutputManager {
         System.out.println("$" + amount);
     }
 
+    /**
+     * This prints the current state of the seating arrangement.
+     * @param seatLayout The seating arrangement to be printed
+     */
     public static void printSeatLayout(char[][] seatLayout) {
         StringBuilder result = new StringBuilder();
         result.append("Cinema:\n");
@@ -41,6 +45,10 @@ public class OutputManager {
         System.out.println(result);
     }
 
+    /**
+     * Prints the amount for the ticket with a $ sign
+     * @param amount
+     */
     public static void printTicketPrice(int amount) {
         System.out.println("Ticket price: $" + amount);
         System.out.println(" "); // Extra space for formatiing
