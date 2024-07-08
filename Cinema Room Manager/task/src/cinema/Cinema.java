@@ -1,5 +1,7 @@
 package cinema;
 
+import java.util.Arrays;
+
 public class Cinema {
 
 
@@ -15,13 +17,29 @@ public class Cinema {
         int seatsPerRow = Integer.parseInt(UserInputManager.readUserInput());
         CinemaLayoutManager.setSeatsPerRow(seatsPerRow);
 
+        // Create seat layout, set the layout and Print the Cinema layout to the screen
+        char[][] seatLayout = CinemaLayoutManager.createSeatLayout(rows, seatsPerRow);
+        CinemaLayoutManager.setSeatLayout(seatLayout);
+        OutputManager.printSeatLayout(CinemaLayoutManager.getSeatLayout());
+
         // Calculate total seats and set it.
         int totalSeats = rows * seatsPerRow;
         CinemaLayoutManager.setTotalSeats(totalSeats);
 
-        // Calculate total income and print to screen
-        int totalIncomeFromTickets = CalculationManager.calculateIncomeFromTickets();
-        OutputManager.printTotalIncome(totalIncomeFromTickets);
+        // Get user to pick a seat to print the price of the ticket for that seat, and then book
+        // the seat
+        System.out.println("Enter a row number:");
+        int rowNumber = Integer.parseInt(UserInputManager.readUserInput());
+        System.out.println("Enter a seat number in that row:");
+        int seatNumber = Integer.parseInt(UserInputManager.readUserInput());
+
+        // Calculate the ticket price
+        int ticketPrice = CalculationManager.calculateTicketPrice(rowNumber);
+        OutputManager.printTicketPrice(ticketPrice);
+
+        // Update the seating arrangement with a booking
+        CinemaLayoutManager.bookSeat(rowNumber, seatNumber);
+        OutputManager.printSeatLayout(seatLayout);
 
     }
 }

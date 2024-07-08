@@ -300,6 +300,112 @@ files:
           }
       }
     learner_created: false
+  - name: src/cinema/CinemaLayoutManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class CinemaLayoutManager {
+          // INSTANCE VARIABLES
+          private static int rows;
+          private static int seatsPerRow;
+          private static int totalSeats;
+      
+          // GETTERS AND SETTERS
+      
+          public static int getRows() {
+              return rows;
+          }
+      
+          public static void setRows(int rows) {
+              CinemaLayoutManager.rows = rows;
+          }
+      
+          public static int getSeatsPerRow() {
+              return seatsPerRow;
+          }
+      
+          public static void setSeatsPerRow(int seatsPerRow) {
+              CinemaLayoutManager.seatsPerRow = seatsPerRow;
+          }
+      
+          public static int getTotalSeats() {
+              return totalSeats;
+          }
+      
+          public static void setTotalSeats(int totalSeats) {
+              CinemaLayoutManager.totalSeats = totalSeats;
+          }
+      }
+    learner_created: true
+  - name: src/cinema/OutputManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class OutputManager {
+      
+          public static void printTotalIncome(int amount) {
+              System.out.println("Total income:");
+              System.out.println("$" + amount);
+          }
+      }
+    learner_created: true
+  - name: src/cinema/UserInputManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      import java.util.Scanner;
+      
+      public class UserInputManager {
+          private static final Scanner scanner = new Scanner(System.in);
+      
+          /**
+           * Reads the input from the user.
+           * @return The user's input as a string.
+           */
+          public static String readUserInput() {
+              return scanner.nextLine();
+          }
+      }
+    learner_created: true
+  - name: src/cinema/CalculationManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class CalculationManager {
+      
+          /**
+           * Calculates the total income from the ticket sales based on the total seats. Rates change
+           * depending on where the seat is located.
+           * @return The total income from tickets as an int
+           */
+          public static int calculateIncomeFromTickets() {
+              // Small screen rooms are set at $60
+              int totalSeats = CinemaLayoutManager.getTotalSeats();
+              if (totalSeats <= 60) {
+                  return totalSeats * 10;
+              } else {
+                  // Larger rooms are split in half. For odd numbers, the back half is bigger
+                  // Get the total rows and split them in haf
+                  int totalRows = CinemaLayoutManager.getRows();
+                  int firstHalfAmount = totalRows / 2;
+                  int secondHalfAmount = totalRows - firstHalfAmount;
+      
+                  // Calculate the cost for each half and sum them
+                  int seatsPerRow = CinemaLayoutManager.getSeatsPerRow();
+                  int firstHalfIncome = firstHalfAmount * 10 * seatsPerRow;
+                  int secondHalfIncome = secondHalfAmount * 8 * seatsPerRow;
+                  return firstHalfIncome + secondHalfIncome;
+              }
+          }
+      }
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/11107#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Mon, 08 Jul 2024 11:20:42 UTC"
 record: -1

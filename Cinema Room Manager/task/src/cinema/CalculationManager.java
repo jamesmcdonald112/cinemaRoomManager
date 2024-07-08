@@ -5,6 +5,7 @@ public class CalculationManager {
     /**
      * Calculates the total income from the ticket sales based on the total seats. Rates change
      * depending on where the seat is located.
+     *
      * @return The total income from tickets as an int
      */
     public static int calculateIncomeFromTickets() {
@@ -24,6 +25,18 @@ public class CalculationManager {
             int firstHalfIncome = firstHalfAmount * 10 * seatsPerRow;
             int secondHalfIncome = secondHalfAmount * 8 * seatsPerRow;
             return firstHalfIncome + secondHalfIncome;
+        }
+    }
+
+    public static int calculateTicketPrice(int row) {
+        // Small screen rooms are set at $60
+        int totalSeats = CinemaLayoutManager.getTotalSeats();
+        if (totalSeats <= 60) {
+            return 10;
+        } else {
+            // if it is in the first half, charge 10, otherwise 8
+            int cost = (CinemaLayoutManager.isFirstHalf(row)) ? 10 : 8;
+            return cost;
         }
     }
 }
