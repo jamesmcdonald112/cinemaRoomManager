@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id=":Topics-Array_exceptions-Statements" external.linked.project.path="$MODULE_DIR$/../../../../../Topics/Array exceptions/Statements" external.root.project.path="$MODULE_DIR$/../../../../.." external.system.id="GRADLE" external.system.module.group="Cinema Room Manager" external.system.module.version="unspecified" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../../../Topics/Array exceptions/Statements">
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/Array exceptions/Statements/.gradle" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/Array exceptions/Statements/build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../../../../Topics/Array exceptions/Statements/out" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="SonarLintModuleSettings">
+    <option name="uniqueId" value="51d5c9f3-53b9-4058-a35a-481e76a61748" />
+  </component>
+</module>

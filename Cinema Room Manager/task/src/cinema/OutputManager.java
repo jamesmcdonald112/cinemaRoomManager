@@ -2,9 +2,12 @@ package cinema;
 
 public class OutputManager {
 
+    /**
+     * Prints the income to the screen with a dollar sign
+     * @param amount
+     */
     public static void printTotalIncome(int amount) {
-        System.out.println("Total income:");
-        System.out.println("$" + amount);
+        System.out.println("Total income: $" + amount);
     }
 
     /**

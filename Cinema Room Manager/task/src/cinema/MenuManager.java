@@ -23,6 +23,7 @@ public class MenuManager {
         System.out.println("""
                 1. Show the seats
                 2. Buy a ticket
+                3. Statistics
                 0. Exit""");
         int userChoice = Integer.parseInt(UserInputManager.readUserInput());
 
@@ -32,6 +33,7 @@ public class MenuManager {
             // Buy a ticket
             case 2 ->  BuySeatManager.buySeatManager();
                 // Exit
+            case 3 -> StatisticsManager.showStatistics();
             case 0 -> setRunning(false);
             default -> System.out.println("Please enter a value between 1-3");
         }

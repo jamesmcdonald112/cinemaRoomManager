@@ -42,6 +42,12 @@ public class BuySeatManager {
         // Book the seat
         BuySeatManager.bookSeat(row, seat);
 
+        // Update the total tickets bought
+        StatisticsManager.increasePurchasedTickets();
+
+        // Update the current income from tickets
+        StatisticsManager.increaseCurrentTicketIncome(ticketPrice);
+
     }
 
     /**
@@ -52,16 +58,49 @@ public class BuySeatManager {
         // Get user to pick a seat to print the price of the ticket for that seat, and then book
         // the seat
         int[] seat = new int[2];
-        System.out.println("Enter a row number:");
-        int rowNumber = Integer.parseInt(UserInputManager.readUserInput());
-        System.out.println("Enter a seat number in that row:");
-        int seatNumber = Integer.parseInt(UserInputManager.readUserInput());
 
-        seat[0] = rowNumber;
-        seat[1] = seatNumber;
-
+        boolean running = true;
+        while (running) {
+            System.out.println("Enter a row number:");
+            int rowNumber = Integer.parseInt(UserInputManager.readUserInput());
+            System.out.println("Enter a seat number in that row:");
+            int seatNumber = Integer.parseInt(UserInputManager.readUserInput());
+            if(!isValidSeat(rowNumber, seatNumber)) {
+                System.out.println("Wrong input!");
+            } else if (!isAvailableSeat(rowNumber, seatNumber)) {
+                System.out.println("That ticket has already been purchased!");
+            } else {
+                seat[0] = rowNumber;
+                seat[1] = seatNumber;
+                running = false;
+            }
+        }
         return seat;
+    }
 
+    /**
+     * Checks the seat is in the bounds of the cinema
+     * @param row The row to be checked
+     * @param seat The seat to be checked
+     * @return True if it is a valid seat; false otherwise
+     */
+    private static boolean isValidSeat(int row, int seat) {
+        int totalRows = CinemaLayoutManager.getRows();
+        int seatsPerRow = CinemaLayoutManager.getSeatsPerRow();
+
+        // Seat must be a positive number and must be in the bounds of the seatLayout
+        return (row <= totalRows && row >= 1) && (seat <= seatsPerRow && seat >= 1);
+    }
+
+    /**
+     * Checks if the seat is available
+     * @param row the row to be checked
+     * @param seat The seat to be checked
+     * @return True if it is available; false otherwise
+     */
+    private static boolean isAvailableSeat(int row, int seat) {
+        char[][] seatLayout = CinemaLayoutManager.getSeatLayout();
+        return seatLayout[row-1][seat-1] == 'S'; // -1 for indexing
     }
 
     /**

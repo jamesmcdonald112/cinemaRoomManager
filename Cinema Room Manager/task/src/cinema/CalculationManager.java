@@ -1,5 +1,8 @@
 package cinema;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 public class CalculationManager {
 
     /**
@@ -8,7 +11,7 @@ public class CalculationManager {
      *
      * @return The total income from tickets as an int
      */
-    public static int calculateIncomeFromTickets() {
+    public static int calculatePotentialIncomeFromTickets() {
         // Small screen rooms are set at $60
         int totalSeats = CinemaLayoutManager.getTotalSeats();
         if (totalSeats <= 60) {
@@ -43,5 +46,32 @@ public class CalculationManager {
             int cost = (CinemaLayoutManager.isFirstHalf(row)) ? 10 : 8;
             return cost;
         }
+    }
+
+    /**
+     * Calculates the percentage of tickets purchased and rounds up to 2 decimal places. If there
+     * are no tickets purchased, it returns 0
+     * @return The percentage of tickets purchased as a double.
+     */
+    public static String calculatePurchasedTicketPercentage() {
+        // If number of tickets purchased is 0, return 0.
+        if (StatisticsManager.getPurchasedTickets() == 0) {
+            return "0.00";
+        }
+
+        // Calculate percentage
+        int totalSeats = CinemaLayoutManager.getTotalSeats();
+        int totalSeatsPurchased = StatisticsManager.getPurchasedTickets();
+        double percentage =  ((double) totalSeatsPurchased / totalSeats) * 100.00;
+
+        // Round to two decimal places
+        BigDecimal bd = new BigDecimal(Double.toString(percentage));
+        bd = bd.setScale(2, RoundingMode.HALF_UP);
+        double roundedValue = bd.doubleValue();
+
+        // Ensure the result always has 2 decimal places
+        String formattedMessage = String.format("%.2f", roundedValue);
+
+        return formattedMessage;
     }
 }

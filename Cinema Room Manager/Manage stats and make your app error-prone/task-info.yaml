@@ -613,6 +613,345 @@ files:
           }
       }
     learner_created: false
+  - name: src/cinema/BuySeatManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class BuySeatManager {
+          // INSTANCE VARIABLES
+          private static int row;
+          private static int seat;
+      
+          // GETTERS AND SETTERS
+          public static int getRow() {
+              return row;
+          }
+      
+          public static void setRow(int row) {
+              BuySeatManager.row = row;
+          }
+      
+          public static int getSeat() {
+              return seat;
+          }
+      
+          public static void setSeat(int seat) {
+              BuySeatManager.seat = seat;
+          }
+      
+          /**
+           * Handles the logic of buying a seat. The user chooses a seat, the seat is set, the price is
+           * calculated and printed for the user and the seating arrangement is updated.
+           */
+          public static void buySeatManager() {
+              // Get the users seat choice
+              int[] seatLocation = buySeat();
+      
+              // Set the seat
+              setRow(seatLocation[0]);
+              setSeat(seatLocation[1]);
+      
+              // Print the ticket cost for the user
+              // Calculate the ticket price
+              int ticketPrice = CalculationManager.calculateTicketPrice(BuySeatManager.getRow());
+              OutputManager.printTicketPrice(ticketPrice);
+      
+              // Book the seat
+              BuySeatManager.bookSeat(row, seat);
+      
+          }
+      
+          /**
+           * The user is prompted to enter a row and seat number and this is return as an int[].
+           * @return The seat location as an int[]. arr[0] is the row number, arr[1] is the seat number
+           */
+          private static int[] buySeat() {
+              // Get user to pick a seat to print the price of the ticket for that seat, and then book
+              // the seat
+              int[] seat = new int[2];
+              System.out.println("Enter a row number:");
+              int rowNumber = Integer.parseInt(UserInputManager.readUserInput());
+              System.out.println("Enter a seat number in that row:");
+              int seatNumber = Integer.parseInt(UserInputManager.readUserInput());
+      
+              seat[0] = rowNumber;
+              seat[1] = seatNumber;
+      
+              return seat;
+      
+          }
+      
+          /**
+           * The seat is marked as booked in the seating arrangement using the character 'B'
+           * @param row the row to be booked
+           * @param seat The seat to be booked
+           */
+          private static void bookSeat(int row, int seat) {
+              // go to the row and the seat and book the seat for the user. - 1 for indexing
+              char[][] seatLayout = CinemaLayoutManager.getSeatLayout();
+              seatLayout[row - 1][seat - 1] = 'B';
+          }
+      }
+    learner_created: true
+  - name: src/cinema/CinemaLayoutManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class CinemaLayoutManager {
+          // INSTANCE VARIABLES
+          private static int rows;
+          private static int seatsPerRow;
+          private static int totalSeats;
+          private static char[][] seatLayout;
+      
+          // GETTERS AND SETTERS
+      
+          public static int getRows() {
+              return rows;
+          }
+      
+          public static void setRows(int rows) {
+              CinemaLayoutManager.rows = rows;
+          }
+      
+          public static int getSeatsPerRow() {
+              return seatsPerRow;
+          }
+      
+          public static void setSeatsPerRow(int seatsPerRow) {
+              CinemaLayoutManager.seatsPerRow = seatsPerRow;
+          }
+      
+          public static int getTotalSeats() {
+              return totalSeats;
+          }
+      
+          public static void setTotalSeats(int totalSeats) {
+              CinemaLayoutManager.totalSeats = totalSeats;
+          }
+      
+          public static char[][] getSeatLayout() {
+              return seatLayout;
+          }
+      
+          public static void setSeatLayout(char[][] seatLayout) {
+              CinemaLayoutManager.seatLayout = seatLayout;
+          }
+      
+          /**
+           * Creates the seating layout of the cinema based on the total rows and seats per row.
+           *
+           * @param totalRows   The total rows in the seating layout
+           * @param seatsPerRow The number of seats per row
+           * @return The seating layout as a char[][] fill with the character 'S'
+           */
+          public static char[][] createSeatLayout(int totalRows, int seatsPerRow) {
+              char[][] seatLayout = new char[totalRows][seatsPerRow];
+              for (int row = 0; row < totalRows; row++) {
+                  for (int seat = 0; seat < seatsPerRow; seat++) {
+                      seatLayout[row][seat] = 'S';
+                  }
+              }
+              return seatLayout;
+          }
+      
+          /**
+           * Checks to seat is the person is seated in the first of second half of the cinema
+           * @param row The row the person is in
+           * @return True if it is the first half; false otherwise
+           */
+          public static boolean isFirstHalf(int row) {
+              int firstHalf = rows / 2;
+              return row <= firstHalf;
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/cinema/OutputManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class OutputManager {
+      
+          public static void printTotalIncome(int amount) {
+              System.out.println("Total income:");
+              System.out.println("$" + amount);
+          }
+      
+          /**
+           * This prints the current state of the seating arrangement.
+           * @param seatLayout The seating arrangement to be printed
+           */
+          public static void printSeatLayout(char[][] seatLayout) {
+              StringBuilder result = new StringBuilder();
+              result.append("Cinema:\n");
+      
+              // Get the rows and seats per row variable
+              int totalRows = seatLayout.length;
+              int seatsPerRow = seatLayout[0].length;
+      
+              // Add numbers for the rows and the seats per row.
+              for (int number = 0; number <= seatsPerRow; number++) {
+                  if (number == 0) {
+                      result.append(' ');
+                  } else {
+                      result.append(number);
+                  }
+                  result.append(' '); // Add a space
+              }
+      
+              // Add a new line
+              result.append('\n');
+      
+              for (int row = 0; row < totalRows; row++) {
+                  result.append(row + 1); // +1 to adjust for the 0 index
+                  result.append(' '); // Add a space
+                  for (int seat = 0; seat < seatsPerRow; seat++) {
+                      result.append(seatLayout[row][seat]);
+                      result.append(' '); // Add a space
+                  }
+                  result.append("\n");
+              }
+      
+              System.out.println(result);
+          }
+      
+          /**
+           * Prints the amount for the ticket with a $ sign
+           * @param amount
+           */
+          public static void printTicketPrice(int amount) {
+              System.out.println("Ticket price: $" + amount);
+              System.out.println(" "); // Extra space for formatiing
+          }
+      }
+    learner_created: true
+  - name: src/cinema/UserInputManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      import java.util.Scanner;
+      
+      public class UserInputManager {
+          private static final Scanner scanner = new Scanner(System.in);
+      
+          /**
+           * Reads the input from the user.
+           * @return The user's input as a string.
+           */
+          public static String readUserInput() {
+              return scanner.nextLine();
+          }
+      }
+    learner_created: true
+  - name: src/cinema/CalculationManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class CalculationManager {
+      
+          /**
+           * Calculates the total income from the ticket sales based on the total seats. Rates change
+           * depending on where the seat is located.
+           *
+           * @return The total income from tickets as an int
+           */
+          public static int calculateIncomeFromTickets() {
+              // Small screen rooms are set at $60
+              int totalSeats = CinemaLayoutManager.getTotalSeats();
+              if (totalSeats <= 60) {
+                  return totalSeats * 10;
+              } else {
+                  // Larger rooms are split in half. For odd numbers, the back half is bigger
+                  // Get the total rows and split them in haf
+                  int totalRows = CinemaLayoutManager.getRows();
+                  int firstHalfAmount = totalRows / 2;
+                  int secondHalfAmount = totalRows - firstHalfAmount;
+      
+                  // Calculate the cost for each half and sum them
+                  int seatsPerRow = CinemaLayoutManager.getSeatsPerRow();
+                  int firstHalfIncome = firstHalfAmount * 10 * seatsPerRow;
+                  int secondHalfIncome = secondHalfAmount * 8 * seatsPerRow;
+                  return firstHalfIncome + secondHalfIncome;
+              }
+          }
+      
+          /**
+           * Calculates the cost of the ticket based on the seat location
+           * @param row The row of the seat
+           * @return The price of the ticket as an int.
+           */
+          public static int calculateTicketPrice(int row) {
+              // Small screen rooms are set at $60
+              int totalSeats = CinemaLayoutManager.getTotalSeats();
+              if (totalSeats <= 60) {
+                  return 10;
+              } else {
+                  // if it is in the first half, charge 10, otherwise 8
+                  int cost = (CinemaLayoutManager.isFirstHalf(row)) ? 10 : 8;
+                  return cost;
+              }
+          }
+      }
+    learner_created: true
+  - name: src/cinema/MenuManager.java
+    visible: true
+    text: |
+      package cinema;
+      
+      public class MenuManager {
+          // INSTANCE VARIABLES
+          private static boolean running = true;
+      
+          // GETTERS AND SETTERS
+      
+      
+          public static boolean isRunning() {
+              return running;
+          }
+      
+          public static void setRunning(boolean running) {
+              MenuManager.running = running;
+          }
+      
+          /**
+           * This is the logic for the menu. It displays a list of menu items with numbers and the user
+           * is asked to select an option. The user can view the seats, buy a seat or exit.
+           */
+          public static void menuManager() {
+              System.out.println("""
+                      1. Show the seats
+                      2. Buy a ticket
+                      0. Exit""");
+              int userChoice = Integer.parseInt(UserInputManager.readUserInput());
+      
+              switch (userChoice) {
+                  // Show the seats
+                  case 1 -> OutputManager.printSeatLayout(CinemaLayoutManager.getSeatLayout());
+                  // Buy a ticket
+                  case 2 ->  BuySeatManager.buySeatManager();
+                      // Exit
+                  case 0 -> setRunning(false);
+                  default -> System.out.println("Please enter a value between 1-3");
+              }
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/cinema/StatisticsManager.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/11109#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Mon, 08 Jul 2024 17:02:17 UTC"
 record: -1
